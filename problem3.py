@@ -1,30 +1,39 @@
+"""
+	Work of David Yan, Williams College Class of 2015
+	Contact at davidyan93@gmail.com
+"""
+
 import math
-import random
-from decimal import Decimal
 
 # Naive prime checking approach
 def isPrime(num):
-	prime = True
 	for i in xrange(2, num):
-		if num%i == 0:
-			prime = True
-			break # Don't need to check further
-	return prime
+		if num % i == 0:
+			return False
+	return True
 
-#overflow issues.
+def largestPrimeFactor(goal, largest):
+	current = 2
 
-#okay divide locally
-def largestPrimeFactor(num):
-	current = 0
-	for i in xrange(2, num):
-		if isPrime(i) and num%i == 0: # I hope python is a lazy evaluator....
-			current = i
-			return largestPrimeFactor(num / i) # Attempt to recursively make this smaller
+	# Reduce to subproblems as often as possible
+	while current < goal:
+		if goal % current == 0:
+			if isPrime(current):
+				if current > largest:
+					return largestPrimeFactor((goal / current), current)
+				else:
+					return largestPrimeFactor((goal / current), largest)
+		current += 1
 
-	return current
+	# if we get to here, no other prime factors, so check if where we are is currently prime.
+	if isPrime(goal):
+		return goal
+	else:
+		return largest
+
 
 def main():
-	print largestPrimeFactor(Decimal(600851475143))
+	print largestPrimeFactor(600851475143, 0)
 
 if __name__ == "__main__":
 	main()

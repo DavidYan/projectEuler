@@ -1,5 +1,6 @@
 """
-DO NOT REDO
+    Work of David Yan, Williams College Class of 2015
+    Contact at davidyan93@gmail.com
 """
 
 import math
